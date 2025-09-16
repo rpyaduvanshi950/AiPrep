@@ -34,14 +34,30 @@ AiPrep/
 - Backend stores all questions and answers with timestamps.
 - Visualization canvas supports circles, rectangles, arrows, text, and multiple animation types.
 
-## Setup Instructions
 
-### Prerequisites
+## Quick Start (Recommended)
+
+
+You can use the provided Python script to automatically install dependencies and run both frontend and backend servers:
+
+```bash
+python3 main.py
+```
+
+This will:
+- Install npm dependencies in both `server` and `client` folders
+- Start the backend at `http://localhost:5050`
+- Start the frontend at `http://localhost:5173`
+- Show all API endpoints for both
+
+### Manual Setup (Advanced)
+
+#### Prerequisites
 - Node.js (v18+ recommended)
 - npm
 
-### 1. Backend Setup
-```
+#### 1. Backend Setup
+```bash
 cd server
 npm install
 npm run dev
@@ -53,8 +69,8 @@ npm run dev
   - `GET /api/answers/:id` — Fetch answer by ID
   - `GET /api/stream` — Subscribe to SSE for real-time updates
 
-### 2. Frontend Setup
-```
+#### 2. Frontend Setup
+```bash
 cd client
 npm install
 npm run dev
@@ -62,7 +78,7 @@ npm run dev
 - The frontend runs on `http://localhost:5173`.
 - Vite proxy automatically forwards `/api` requests to the backend.
 
-### 3. Usage
+#### 3. Usage
 - Open `http://localhost:5173` in your browser.
 - Type a question in the chat bar at the bottom center and press Send.
 - Watch the visualization animate and see the answer appear in the chat history.

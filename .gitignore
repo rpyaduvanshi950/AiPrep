@@ -1,0 +1,35 @@
+# Node.js dependencies
+server/node_modules/
+client/node_modules/
+
+# Build output
+client/dist/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+
+
+# Environment files (do not push secrets or envs)
+.env
+.env.*
+server/.env
+client/.env
+server/.env.example
+# Misc
+*.swp
+*.swo
+
+# VSCode
+.vscode/
+
+# Data files (optional, uncomment if you want to ignore)
+# server/questions.json
+# server/answers.json
