@@ -1,0 +1,211 @@
+/* Add visual separation for chat pairs */
+.chat-pair {
+  margin-bottom: 24px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed #0ff3;
+}
+body {
+  margin: 0;
+  font-family: 'Orbitron', 'Share Tech Mono', 'Inter', Arial, sans-serif;
+  background: linear-gradient(135deg, #181a20 0%, #23272f 100%);
+  color: #e0e6f7;
+  min-height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+
+.app-root {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100vw;
+  background: linear-gradient(135deg, #181a20 0%, #23272f 100%);
+  box-shadow: 0 0 40px #0ff2 0px 0px 40px 0px;
+}
+
+
+.vis-col {
+  width: 50vw;
+  min-width: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(120deg, #20232a 60%, #181a20 100%);
+  border-right: 2px solid #0ff6;
+  box-shadow: 0 0 24px #0ff2 inset;
+}
+
+
+.chat-col {
+  width: 50vw;
+  min-width: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: linear-gradient(120deg, #181a20 60%, #23272f 100%);
+  box-shadow: 0 0 24px #0ff2 inset;
+}
+
+@media (max-width: 900px) {
+  .app-root {
+    flex-direction: column;
+  }
+  .vis-col, .chat-col {
+    max-width: 100vw;
+    min-width: 0;
+    height: 50vh;
+  }
+}
+
+/* ChatPanel */
+
+.chat-panel {
+  flex: 1;
+  overflow-y: auto;
+  padding: 32px 24px 80px 24px;
+  display: flex;
+  flex-direction: column-reverse;
+  font-family: 'Share Tech Mono', 'Orbitron', Arial, sans-serif;
+  font-size: 1.08em;
+  letter-spacing: 0.02em;
+}
+
+
+.chat-bubble {
+  background: linear-gradient(90deg, #23272f 80%, #0ff2 100%);
+  border-radius: 14px;
+  padding: 14px 20px;
+  margin-bottom: 16px;
+  max-width: 90%;
+  word-break: break-word;
+  box-shadow: 0 2px 16px #0ff2;
+  border: 1px solid #0ff4;
+  font-family: 'Orbitron', 'Share Tech Mono', Arial, sans-serif;
+  font-size: 1.08em;
+}
+
+
+.chat-bubble.question {
+  align-self: flex-end;
+  background: linear-gradient(90deg, #2d313a 80%, #0ff2 100%);
+  color: #0ff;
+  border: 1px solid #0ff6;
+  font-weight: 600;
+}
+
+.chat-bubble.answer {
+  align-self: flex-start;
+  background: linear-gradient(90deg, #23272f 80%, #0ff2 100%);
+  color: #e0e6f7;
+  border: 1px solid #0ff3;
+}
+
+.loading {
+  color: #aaa;
+  font-size: 0.95em;
+  margin-bottom: 8px;
+}
+
+/* ChatBox */
+
+
+
+.chat-box {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 90vw;
+  max-width: 520px;
+  display: flex;
+  align-items: center;
+  padding: 22px 32px 22px 32px;
+  border-radius: 18px 18px 0 0;
+  border-top: 2px solid #0ff6;
+  background: linear-gradient(90deg, #181a20 80%, #23272f 100%);
+  box-shadow: 0 -2px 32px #0ff3, 0 0 80px #0ff1 inset;
+  z-index: 100;
+}
+
+.chat-input {
+  flex: 1;
+  background: #23272f;
+  color: #0ff;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-size: 1.15em;
+  outline: none;
+  margin-right: 14px;
+  font-family: 'Share Tech Mono', 'Orbitron', Arial, sans-serif;
+  box-shadow: 0 2px 12px #0ff2 inset;
+}
+
+.send-btn {
+  background: linear-gradient(90deg, #0ff 60%, #3a7afe 100%);
+  color: #181a20;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 24px;
+  font-size: 1.15em;
+  cursor: pointer;
+  font-weight: 700;
+  box-shadow: 0 2px 12px #0ff2;
+  transition: background 0.2s;
+}
+.send-btn:disabled {
+  background: #2d313a;
+  color: #888;
+  cursor: not-allowed;
+}
+
+/* VisualizationCanvas */
+
+.vis-canvas-wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 32px #0ff2 inset;
+}
+
+
+.vis-canvas-controls {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+
+.vis-canvas-status {
+  color: #0ff;
+  font-size: 1.05em;
+  margin-top: 12px;
+  text-align: center;
+  font-family: 'Share Tech Mono', 'Orbitron', Arial, sans-serif;
+}
+
+
+canvas.vis-canvas {
+  background: linear-gradient(135deg, #15171c 60%, #23272f 100%);
+  border-radius: 18px;
+  box-shadow: 0 2px 32px #0ff3;
+  max-width: 100%;
+  max-height: 60vh;
+  width: 520px;
+  height: 380px;
+  border: 2px solid #0ff6;
+}
+
+@media (max-width: 700px) {
+  canvas.vis-canvas {
+    width: 98vw;
+    height: 40vw;
+    min-height: 180px;
+  }
+}
