@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { gsap } from 'gsap';
 
 function lerp(a, b, t) {
   return a + (b - a) * t;
@@ -74,7 +75,8 @@ function drawLayer(ctx, layer, t, playing) {
   ctx.restore();
 }
 
-export default function VisualizationCanvas({ spec }) {
+// Accepts either a visualization spec or Gemini-generated GSAP code
+export default function VisualizationCanvas({ spec, geminiCode }) {
   const canvasRef = useRef();
   const [playing, setPlaying] = useState(true);
   const [elapsed, setElapsed] = useState(0);
@@ -86,7 +88,7 @@ export default function VisualizationCanvas({ spec }) {
     setPlaying(true);
   }, [spec]);
 
-  // Animation loop
+  // Animation loop (spec-based)
   useEffect(() => {
     if (!spec || !playing) return;
     let start = performance.now() - elapsed;
@@ -110,6 +112,25 @@ export default function VisualizationCanvas({ spec }) {
     };
     // eslint-disable-next-line
   }, [spec, playing]);
+
+  // GSAP animation (Gemini code)
+  useEffect(() => {
+    if (!geminiCode) return;
+    // Example: Gemini returns a function as a string, which animates the canvas
+    // WARNING: eval is dangerous! Only use if you trust the source.
+    try {
+      // Provide context: canvasRef, gsap
+      // Example Gemini code: function(canvas, gsap) { ... }
+      // eslint-disable-next-line no-eval
+      const fn = eval(geminiCode);
+      if (typeof fn === 'function') {
+        fn(canvasRef.current, gsap);
+      }
+    } catch (e) {
+      // Show error in UI or log
+      console.error('Gemini GSAP code error:', e);
+    }
+  }, [geminiCode]);
 
   function draw(t) {
     const canvas = canvasRef.current;
@@ -135,23 +156,21 @@ export default function VisualizationCanvas({ spec }) {
   }
 
   return (
-    <div className="vis-canvas-wrap">
-      <div className="vis-canvas-controls">
-        <button onClick={handlePlay} disabled={playing || !spec}>Play</button>
-        <button onClick={handlePause} disabled={!playing || !spec}>Pause</button>
-        <button onClick={handleReset} disabled={!spec}>Reset</button>
-      </div>
-      <canvas
-        className="vis-canvas"
-        ref={canvasRef}
-        width={480}
-        height={360}
-      />
-      {spec && (
-        <div className="vis-canvas-status">
-          {Math.round(elapsed)} ms / {spec.duration} ms
-        </div>
-      )}
+    <div className="vis-canvas-wrap" style={{ padding: '32px', width: '100%' }}>
+      <h3 style={{ color: '#e0e6f7', fontWeight: 600, marginBottom: 16 }}>Visualization JSON</h3>
+      <pre style={{
+        background: '#181a20',
+        color: '#e0e6f7',
+        borderRadius: '10px',
+        padding: '24px',
+        fontSize: '1.08em',
+        maxHeight: '60vh',
+        overflow: 'auto',
+        boxShadow: '0 2px 8px #222',
+        border: '1px solid #222',
+      }}>
+        {spec ? JSON.stringify(spec, null, 2) : 'No visualization data.'}
+      </pre>
     </div>
   );
 }

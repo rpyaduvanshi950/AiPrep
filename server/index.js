@@ -136,68 +136,7 @@ async function callLLM(question) {
     return demoLLM[question];
   }
 
-  // --- Gemini API integration ---
-  if (process.env.GEMINI_API_KEY) {
-    try {
-      const fetch = (await import('node-fetch')).default;
-      const geminiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
-  const prompt = `Respond ONLY with a JSON object with two keys: \\"text\\" (a simple explanation of the following question) and \\"visualization\\" (an object with id, duration, fps, and layers as described below). Do not include any extra text, markdown, or formatting.\n\nThe \\"visualization\\" object should have:\n- id: a string\n- duration: number (ms)\n- fps: number\n- layers: array of objects with id, type (circle, rect, arrow, text), props, and animations.\n\nQuestion: ${question}`;
-      const geminiBody = {
-        contents: [{ parts: [{ text: prompt }] }]
-      };
-      const response = await fetch(geminiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-goog-api-key': process.env.GEMINI_API_KEY
-        },
-        body: JSON.stringify(geminiBody)
-      });
-      const data = await response.json();
-      let raw = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-      if (raw) {
-        console.log('\nGemini raw response:\n', raw.trim());
-        let parsed;
-        // Try direct JSON parse
-        try {
-          parsed = JSON.parse(raw);
-          console.log('\nParsed JSON:', parsed);
-        } catch (e) {
-          // Try to extract JSON from Markdown code block
-          const match = raw.match(/```json[\s\S]*?({[\s\S]*})[\s\S]*?```/);
-          if (match) {
-            try {
-              parsed = JSON.parse(match[1]);
-              console.log('\nParsed JSON from Markdown block:', parsed);
-            } catch (e2) {
-              console.log('\nFailed to parse JSON from Markdown block. Returning plain text.');
-              return {
-                text: raw.trim(),
-                visualization: {
-                  id: "vis_gemini_text",
-                  duration: 2000,
-                  fps: 30,
-                  layers: []
-                }
-              };
-            }
-          } else {
-            console.log('\nCould not parse as JSON. Returning plain text.');
-            return {
-              text: raw.trim(),
-              visualization: {
-                id: "vis_gemini_text",
-                duration: 2000,
-                fps: 30,
-                layers: []
-              }
-            };
-          }
-        }
-        if (parsed && parsed.text && parsed.visualization) {
-          return parsed;
-        }
-      }
+  // --- Gemini API integration removed ---
       // If Gemini response is not usable, fallback
       return {
         text: "Sorry, Gemini could not generate a valid response.",
@@ -282,7 +221,7 @@ app.post('/api/questions', async (req, res) => {
   let answerObj;
   try {
     const llmResult = await callLLM(question);
-    answerObj = { id: answerId, ...llmResult, questionId, timestamp: Date.now() };
+  answerObj = { id: answerId, ...llmResult, questionId, timestamp: Date.now() };
     answers.push(answerObj);
     saveAnswers();
     sendEvent('answer_created', { answer: answerObj });
