@@ -1,0 +1,76 @@
+[
+  {
+    "id": "a_IhInktGY",
+    "text": "Gravity is a fundamental force that attracts any two objects with mass towards each other. The more massive an object, the stronger its gravitational pull. This force is what keeps us on the ground, planets in orbit around the Sun, and galaxies bound together.",
+    "visualization": {
+      "id": "gravity_explanation",
+      "duration": 5000,
+      "fps": 30,
+      "layers": [
+        {
+          "id": "earth",
+          "type": "circle",
+          "props": {
+            "x": 400,
+            "y": 300,
+            "radius": 100,
+            "color": "blue"
+          },
+          "animations": []
+        },
+        {
+          "id": "apple",
+          "type": "circle",
+          "props": {
+            "x": 200,
+            "y": 50,
+            "radius": 20,
+            "color": "red"
+          },
+          "animations": [
+            {
+              "property": "y",
+              "keyframes": [
+                {
+                  "time": 0,
+                  "value": 50
+                },
+                {
+                  "time": 4000,
+                  "value": 280
+                }
+              ],
+              "easing": "easeInCubic"
+            }
+          ]
+        },
+        {
+          "id": "arrow",
+          "type": "arrow",
+          "props": {
+            "x1": 200,
+            "y1": 50,
+            "x2": 400,
+            "y2": 300,
+            "color": "white"
+          },
+          "animations": []
+        },
+        {
+          "id": "text",
+          "type": "text",
+          "props": {
+            "x": 550,
+            "y": 100,
+            "content": "Gravity",
+            "color": "white",
+            "fontSize": 24
+          },
+          "animations": []
+        }
+      ]
+    },
+    "questionId": "q_pzSSl2QN",
+    "timestamp": 1758426917104
+  }
+]
